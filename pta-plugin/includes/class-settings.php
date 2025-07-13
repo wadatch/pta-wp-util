@@ -87,6 +87,12 @@ class Settings {
 			'sanitize_callback' => 'rest_sanitize_boolean',
 			'default' => true
 		) );
+		
+		register_setting( 'pta_translation_settings', 'pta_charset_conversion_enabled', array(
+			'type' => 'boolean',
+			'sanitize_callback' => 'rest_sanitize_boolean',
+			'default' => true
+		) );
 	}
 
 	/**
@@ -230,7 +236,12 @@ class Settings {
 		$provider = get_option( 'pta_translation_provider', 'mymemory' );
 		$api_key = get_option( 'pta_mymemory_api_key', '' );
 		$ascii_fallback = get_option( 'pta_ascii_fallback', true );
+		$charset_conversion = get_option( 'pta_charset_conversion_enabled', true );
 		$providers = Slug_Generator::get_translation_providers();
+		
+		// Get database charset info
+		$db_charset = Charset_Converter::get_database_charset();
+		$needs_conversion = Charset_Converter::needs_conversion();
 		?>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'pta_translation_settings' ); ?>
@@ -282,6 +293,31 @@ class Settings {
 						</label>
 						<p class="description">
 							<?php esc_html_e( 'API エラーや制限に達した場合の代替処理を有効にします。', 'pta-plugin' ); ?>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<?php esc_html_e( '文字変換', 'pta-plugin' ); ?>
+					</th>
+					<td>
+						<label>
+							<input type="checkbox" name="pta_charset_conversion_enabled" value="1" <?php checked( $charset_conversion ); ?> />
+							<?php esc_html_e( '4バイト文字をHTML参照文字列に変換する', 'pta-plugin' ); ?>
+						</label>
+						<p class="description">
+							<?php
+							printf(
+								/* translators: %1$s: database charset, %2$s: status */
+								esc_html__( 'データベース文字セット: %1$s (%2$s)', 'pta-plugin' ),
+								'<code>' . esc_html( $db_charset ) . '</code>',
+								$needs_conversion ? 
+									'<span style="color: #d63638;">' . esc_html__( '変換推奨', 'pta-plugin' ) . '</span>' : 
+									'<span style="color: #00a32a;">' . esc_html__( '変換不要', 'pta-plugin' ) . '</span>'
+							);
+							?>
+							<br>
+							<?php esc_html_e( 'UTF-8（3バイト制限）環境で絵文字や特殊文字による登録エラーを防ぎます。', 'pta-plugin' ); ?>
 						</p>
 					</td>
 				</tr>

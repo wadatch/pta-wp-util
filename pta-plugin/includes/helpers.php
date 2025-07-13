@@ -325,3 +325,117 @@ function pta_get_current_url() {
 	global $wp;
 	return home_url( $wp->request );
 }
+
+/**
+ * Convert text to HTML entities (for charset compatibility)
+ *
+ * @param string $text Text to convert.
+ * @return string Converted text.
+ */
+function pta_convert_to_entities( $text ) {
+	$charset_converter = pta_plugin()->get_charset_converter();
+	return $charset_converter ? Charset_Converter::convert_to_entities( $text ) : $text;
+}
+
+/**
+ * Convert HTML entities back to original characters
+ *
+ * @param string $text Text with HTML entities.
+ * @return string Converted text.
+ */
+function pta_convert_from_entities( $text ) {
+	$charset_converter = pta_plugin()->get_charset_converter();
+	return $charset_converter ? Charset_Converter::convert_from_entities( $text ) : $text;
+}
+
+/**
+ * Check if text contains 4-byte UTF-8 characters
+ *
+ * @param string $text Text to check.
+ * @return bool True if contains 4-byte chars.
+ */
+function pta_contains_4byte_chars( $text ) {
+	return Charset_Converter::contains_4byte_chars( $text );
+}
+
+/**
+ * Prepare text for database storage
+ *
+ * @param string $text Text to prepare.
+ * @return string Safe text for database.
+ */
+function pta_prepare_for_database( $text ) {
+	return Charset_Converter::prepare_for_database( $text );
+}
+
+/**
+ * Prepare text from database for display
+ *
+ * @param string $text Text from database.
+ * @return string Text ready for display.
+ */
+function pta_prepare_for_display( $text ) {
+	return Charset_Converter::prepare_for_display( $text );
+}
+
+/**
+ * Check if charset conversion is enabled
+ *
+ * @return bool True if conversion is enabled.
+ */
+function pta_is_charset_conversion_enabled() {
+	return Charset_Converter::is_conversion_enabled();
+}
+
+/**
+ * Check if database needs charset conversion
+ *
+ * @return bool True if conversion is needed.
+ */
+function pta_needs_charset_conversion() {
+	return Charset_Converter::needs_conversion();
+}
+
+/**
+ * Get database charset information
+ *
+ * @return string Database charset.
+ */
+function pta_get_database_charset() {
+	return Charset_Converter::get_database_charset();
+}
+
+/**
+ * Test charset conversion functionality
+ *
+ * @return array Test results.
+ */
+function pta_test_charset_conversion() {
+	$test_strings = array(
+		'😀 Hello World! 🌟',
+		'数学記号: ∞ ≠ √ ∑',
+		'通貨: € £ ¥ ₹',
+		'ギリシャ文字: α β γ δ ε',
+		'普通の日本語テキスト',
+		'ASCII text only'
+	);
+	
+	$results = array();
+	
+	foreach ( $test_strings as $original ) {
+		$converted = pta_convert_to_entities( $original );
+		$restored = pta_convert_from_entities( $converted );
+		$has_4byte = pta_contains_4byte_chars( $original );
+		
+		$results[] = array(
+			'original' => $original,
+			'converted' => $converted,
+			'restored' => $restored,
+			'has_4byte' => $has_4byte,
+			'conversion_worked' => ( $original === $restored ),
+			'was_converted' => ( $original !== $converted )
+		);
+	}
+	
+	return $results;
+}

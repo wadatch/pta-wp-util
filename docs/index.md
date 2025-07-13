@@ -21,11 +21,12 @@
 
 | キー | デフォルト値 | 説明 |
 | --- | --- | --- |
-| `pta_city_name` | “XXXX市” | 管理画面で自由入力 |
+| `pta_city_name` | "XXXX市" | 管理画面で自由入力 |
 | `pta_blocks` | `[ward-1, ward-2, ward-3, ward-4, rard-5, ward-6, ward-7, ward-8, ward-9, ward-10]` | 区連スラッグ配列。順序・数は自由に変更可 |
 | `translation_provider` | `mymemory` | `mymemory` / `deepl` / `none` |
 | `mymemory_api_key` | ― | Provider が MyMemory の場合のみ必須 |
 | `ascii_fallback` | `true` | 翻訳失敗時にローマナイズのみでスラッグ生成 |
+| `charset_conversion_enabled` | `true` | 4バイト文字のHTML参照文字列変換の有効/無効 |
 
 ---
 
@@ -59,19 +60,35 @@
 | 既存記事更新 | `save_post` | 編集者がスラッグを空に戻した場合のみ再生成 |
 
 処理手順  
-1. タイトル取得 → 翻訳 API 呼び出し（MyMemory）。  
-2. レスポンスを `sanitize_title()` で ASCII 化。  
-3. 既存衝突チェックし `-2`, `-3` … 付与。  
-4. 失敗時は `remove_accents()` → ASCII 化（`ascii_fallback` が true の場合）。
+1. タイトル取得 → 文字変換（必要に応じて4バイト文字をHTML参照文字列に変換）。  
+2. 翻訳 API 呼び出し（MyMemory）。  
+3. レスポンスを `sanitize_title()` で ASCII 化。  
+4. 既存衝突チェックし `-2`, `-3` … 付与。  
+5. 失敗時は `remove_accents()` → ASCII 化（`ascii_fallback` が true の場合）。
 
-### 3.4 設定ページ
+### 3.4 文字変換システム
+
+UTF-8（3バイト制限）環境での4バイト文字対応
+
+| 対象文字 | 変換方法 | 例 |
+| --- | --- | --- |
+| 絵文字 | HTML数値参照 | 😀 → `&#128512;` |
+| 特殊記号 | HTML数値参照 | ∞ → `&#8734;` |
+| 通貨記号 | HTML数値参照 | € → `&#8364;` |
+
+**動作条件**  
+- データベースが `utf8`（`utf8mb4` 以外）の場合に自動適用  
+- 設定で有効/無効の切り替え可能  
+- スラッグ生成時とDB保存時に適用
+
+### 3.5 設定ページ
 
 `設定 → PTA` サブメニューを追加し、以下タブを提供。
 
 | タブ | 内容 |
 | --- | --- |
 | **基本設定** | 市名、ブロック一覧（リピートフィールド） |
-| **翻訳 API** | Provider 選択、API キー入力 |
+| **翻訳 API** | Provider 選択、API キー入力、文字変換設定 |
 | **ロール/権限** | ロール表示名編集・マッピング確認 |
 
 ---
@@ -83,6 +100,7 @@
 | **セキュリティ** | nonce・capability チェック。外部 API は HTTPS。 |
 | **i18n** | `load_plugin_textdomain()` による多言語対応（`.pot` 同梱）。 |
 | **パフォーマンス** | 翻訳 API 結果は `transient` で 24h キャッシュ。 |
+| **データベース互換性** | UTF-8（3バイト制限）環境での4バイト文字自動変換対応。 |
 | **コーディング規約** | WordPress Coding Standards (PHPCS) & PSR-12 準拠。 |
 
 ---
@@ -97,6 +115,7 @@ pta-plugin/
 │ ├─ class-access-control.php
 │ ├─ class-slug-generator.php
 │ ├─ class-settings.php
+│ ├─ class-charset-converter.php
 │ └─ helpers.php
 └─ languages/
 └─ pta-plugin.pot

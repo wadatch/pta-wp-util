@@ -46,6 +46,7 @@ class PTA_Plugin {
 	private $access_control = null;
 	private $slug_generator = null;
 	private $settings = null;
+	private $charset_converter = null;
 
 	/**
 	 * Get plugin instance
@@ -79,6 +80,7 @@ class PTA_Plugin {
 		require_once PTA_PLUGIN_DIR . 'includes/class-access-control.php';
 		require_once PTA_PLUGIN_DIR . 'includes/class-slug-generator.php';
 		require_once PTA_PLUGIN_DIR . 'includes/class-settings.php';
+		require_once PTA_PLUGIN_DIR . 'includes/class-charset-converter.php';
 	}
 
 	/**
@@ -116,6 +118,9 @@ class PTA_Plugin {
 
 		// Initialize access control
 		$this->access_control = new Access_Control();
+
+		// Initialize charset converter
+		$this->charset_converter = new Charset_Converter();
 
 		// Initialize slug generator
 		$this->slug_generator = new Slug_Generator();
@@ -190,6 +195,11 @@ class PTA_Plugin {
 		if ( ! get_option( 'pta_ascii_fallback' ) ) {
 			update_option( 'pta_ascii_fallback', true );
 		}
+
+		// Charset conversion settings
+		if ( ! get_option( 'pta_charset_conversion_enabled' ) ) {
+			update_option( 'pta_charset_conversion_enabled', true );
+		}
 	}
 
 	/**
@@ -209,6 +219,10 @@ class PTA_Plugin {
 
 	public function get_settings() {
 		return $this->settings;
+	}
+
+	public function get_charset_converter() {
+		return $this->charset_converter;
 	}
 }
 

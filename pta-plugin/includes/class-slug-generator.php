@@ -103,6 +103,9 @@ class Slug_Generator {
 	 * Generate slug from title
 	 */
 	private function generate_slug_from_title( $title ) {
+		// Convert problematic characters for database compatibility
+		$safe_title = Charset_Converter::prepare_for_database( $title );
+		
 		// Get translation provider
 		$provider = get_option( 'pta_translation_provider', self::PROVIDER_MYMEMORY );
 		
@@ -111,31 +114,34 @@ class Slug_Generator {
 		
 		switch ( $provider ) {
 			case self::PROVIDER_MYMEMORY:
-				$translated = $this->translate_with_mymemory( $title );
+				$translated = $this->translate_with_mymemory( $safe_title );
 				break;
 				
 			case self::PROVIDER_DEEPL:
-				$translated = $this->translate_with_deepl( $title );
+				$translated = $this->translate_with_deepl( $safe_title );
 				break;
 				
 			case self::PROVIDER_NONE:
 				// No translation, use original
-				$translated = $title;
+				$translated = $safe_title;
 				break;
 		}
 
 		// If translation failed and fallback is enabled
 		if ( empty( $translated ) && get_option( 'pta_ascii_fallback', true ) ) {
-			$translated = $this->romanize_text( $title );
+			$translated = $this->romanize_text( $safe_title );
 		}
 
 		// Sanitize to create slug
 		if ( ! empty( $translated ) ) {
-			return sanitize_title( $translated );
+			$slug = sanitize_title( $translated );
+			// Convert back for final slug if needed
+			return Charset_Converter::prepare_for_display( $slug );
 		}
 
 		// Final fallback to original title
-		return sanitize_title( $title );
+		$fallback_slug = sanitize_title( $safe_title );
+		return Charset_Converter::prepare_for_display( $fallback_slug );
 	}
 
 	/**
