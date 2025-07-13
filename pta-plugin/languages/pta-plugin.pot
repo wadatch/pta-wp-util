@@ -1,0 +1,275 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PTA Group Manager & Auto-Slug 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Plugin Name
+msgid "PTA Group Manager & Auto-Slug"
+msgstr ""
+
+#. Description
+msgid "区連（ブロック）単位のコンテンツ編集権限管理と投稿／固定ページ保存時のASCII・英訳スラッグ自動生成"
+msgstr ""
+
+#. Author
+msgid "PTA Development Team"
+msgstr ""
+
+#: includes/class-roles.php:89
+msgid "PTA システム管理者"
+msgstr ""
+
+#: includes/class-roles.php:93
+msgid "PTA 市協議会役員"
+msgstr ""
+
+#: includes/class-roles.php:97
+msgid "PTA 市協議会常任理事"
+msgstr ""
+
+#: includes/class-roles.php:101
+msgid "PTA 市協議会理事"
+msgstr ""
+
+#: includes/class-roles.php:105
+msgid "PTA プロジェクト委員"
+msgstr ""
+
+#: includes/class-roles.php:109
+msgid "PTA 広報委員"
+msgstr ""
+
+#: includes/class-roles.php:113
+msgid "PTA 区連協議会役員"
+msgstr ""
+
+#: includes/class-roles.php:117
+msgid "PTA 単位PTA役員"
+msgstr ""
+
+#: includes/class-roles.php:196
+msgid "PTA 区連設定"
+msgstr ""
+
+#: includes/class-roles.php:200
+msgid "所属区連"
+msgstr ""
+
+#: includes/class-roles.php:204
+msgid "-- 選択してください --"
+msgstr ""
+
+#: includes/class-roles.php:210
+msgid "ユーザーが所属する区連を選択してください。"
+msgstr ""
+
+#: includes/class-slug-generator.php:289
+msgid "MyMemory Translation"
+msgstr ""
+
+#: includes/class-slug-generator.php:290
+msgid "DeepL Translation"
+msgstr ""
+
+#: includes/class-slug-generator.php:291
+msgid "No Translation (Romanization only)"
+msgstr ""
+
+#: includes/class-settings.php:50
+msgid "PTA 設定"
+msgstr ""
+
+#: includes/class-settings.php:51
+msgid "PTA"
+msgstr ""
+
+#: includes/class-settings.php:117
+msgid "基本設定"
+msgstr ""
+
+#: includes/class-settings.php:122
+msgid "翻訳 API"
+msgstr ""
+
+#: includes/class-settings.php:127
+msgid "ロール/権限"
+msgstr ""
+
+#: includes/class-settings.php:147
+msgid "市名"
+msgstr ""
+
+#: includes/class-settings.php:153
+msgid "PTA が活動する市の名前を入力してください。"
+msgstr ""
+
+#: includes/class-settings.php:158
+msgid "ブロック一覧"
+msgstr ""
+
+#: includes/class-settings.php:170
+msgid "例: ward-1"
+msgstr ""
+
+#: includes/class-settings.php:173
+msgid "削除"
+msgstr ""
+
+#: includes/class-settings.php:178
+msgid "ブロックを追加"
+msgstr ""
+
+#: includes/class-settings.php:181
+msgid "区連（ブロック）のスラッグを入力してください。URLやファイルパスで使用されます。"
+msgstr ""
+
+#: includes/class-settings.php:217
+msgid "翻訳プロバイダー"
+msgstr ""
+
+#: includes/class-settings.php:226
+msgid "スラッグ生成に使用する翻訳サービスを選択してください。"
+msgstr ""
+
+#: includes/class-settings.php:231
+msgid "MyMemory API キー"
+msgstr ""
+
+#: includes/class-settings.php:237
+#, php-format
+msgid "MyMemory API キーを入力してください。%s から取得できます。"
+msgstr ""
+
+#: includes/class-settings.php:246
+msgid "ASCII フォールバック"
+msgstr ""
+
+#: includes/class-settings.php:250
+msgid "翻訳に失敗した場合、ローマ字変換を使用する"
+msgstr ""
+
+#: includes/class-settings.php:253
+msgid "API エラーや制限に達した場合の代替処理を有効にします。"
+msgstr ""
+
+#: includes/class-settings.php:275
+msgid "PTA カスタムロール一覧"
+msgstr ""
+
+#: includes/class-settings.php:280
+msgid "ロール名"
+msgstr ""
+
+#: includes/class-settings.php:281
+msgid "表示名"
+msgstr ""
+
+#: includes/class-settings.php:282
+msgid "権限レベル"
+msgstr ""
+
+#: includes/class-settings.php:283
+msgid "説明"
+msgstr ""
+
+#: includes/class-settings.php:295
+msgid "権限の説明"
+msgstr ""
+
+#: includes/class-settings.php:297
+msgid "システム管理者・市協議会役員"
+msgstr ""
+
+#: includes/class-settings.php:297
+msgid "全てのコンテンツに対する完全なアクセス権限"
+msgstr ""
+
+#: includes/class-settings.php:298
+msgid "区連協議会役員"
+msgstr ""
+
+#: includes/class-settings.php:298
+msgid "所属する区連のコンテンツのみ編集可能"
+msgstr ""
+
+#: includes/class-settings.php:299
+msgid "その他の役職"
+msgstr ""
+
+#: includes/class-settings.php:299
+msgid "閲覧権限のみ（非公開ページも閲覧可能）"
+msgstr ""
+
+#: includes/class-settings.php:308
+msgid "管理者"
+msgstr ""
+
+#: includes/class-settings.php:309
+msgid "編集者"
+msgstr ""
+
+#: includes/class-settings.php:310
+msgid "編集者（制限付き）"
+msgstr ""
+
+#: includes/class-settings.php:311
+#: includes/class-settings.php:312
+#: includes/class-settings.php:313
+#: includes/class-settings.php:314
+#: includes/class-settings.php:315
+msgid "閲覧者"
+msgstr ""
+
+#: includes/class-settings.php:318
+msgid "不明"
+msgstr ""
+
+#: includes/class-settings.php:326
+msgid "システム全体の管理権限"
+msgstr ""
+
+#: includes/class-settings.php:327
+msgid "市協議会本部の役員"
+msgstr ""
+
+#: includes/class-settings.php:328
+msgid "区連単位でのコンテンツ管理"
+msgstr ""
+
+#: includes/class-settings.php:329
+msgid "市協議会常任理事"
+msgstr ""
+
+#: includes/class-settings.php:330
+msgid "市協議会理事"
+msgstr ""
+
+#: includes/class-settings.php:331
+msgid "プロジェクト委員会メンバー"
+msgstr ""
+
+#: includes/class-settings.php:332
+msgid "広報委員会メンバー"
+msgstr ""
+
+#: includes/class-settings.php:333
+msgid "各学校のPTA役員"
+msgstr ""
+
+#: includes/class-settings.php:371
+msgid "設定"
+msgstr ""
